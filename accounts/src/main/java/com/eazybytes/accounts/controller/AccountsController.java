@@ -5,6 +5,7 @@ import com.eazybytes.accounts.dto.CustomerDto;
 import com.eazybytes.accounts.dto.ResponseDto;
 import com.eazybytes.accounts.exception.GlobalExceptionHandler;
 import com.eazybytes.accounts.service.IAccountService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -20,15 +21,14 @@ import static org.springframework.http.MediaType.*;
 
 @RestController
 @RequestMapping(path="/api",produces ={APPLICATION_JSON_VALUE} )
+@AllArgsConstructor
+@Tag(name = "Accounts API", description = "Manage accounts")
 public class AccountsController {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
     @Autowired
     IAccountService iAccountService;
-    @Autowired
-    public AccountsController(IAccountService iAccountService) {
-        this.iAccountService = iAccountService;
-    }
+
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> saveCustomer(@Valid @RequestBody CustomerDto customerDto){
         logger.info("Received customer DTO: {}", customerDto);
