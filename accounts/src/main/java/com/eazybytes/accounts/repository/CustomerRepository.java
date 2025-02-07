@@ -9,5 +9,10 @@ import java.util.Optional;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer,Long> {
+    //These are called as derived named methods, used method names to create SQL queries to fetch data
     Optional<Customer> findByMobileNumber(String mobileNumber);
+    Optional<Customer> findByMobileNumberAndName(String mobileNumber,String name);
+    Optional<Customer> findByEmail(String name);
+
+
 }

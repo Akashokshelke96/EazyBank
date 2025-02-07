@@ -5,6 +5,8 @@ import com.eazybytes.accounts.dto.CustomerDto;
 import com.eazybytes.accounts.dto.ResponseDto;
 import com.eazybytes.accounts.entity.Customer;
 import com.eazybytes.accounts.repository.CustomerRepository;
+import com.eazybytes.accounts.service.IAccountService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,28 +18,25 @@ import static org.springframework.http.MediaType.*;
 
 @RestController
 @RequestMapping(path="/api",produces ={APPLICATION_JSON_VALUE} )
+@AllArgsConstructor
 public class AccountsController {
 
     @Autowired
-    CustomerRepository customerRepository;
+    IAccountService iAccountService;
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> saveCustomer(@RequestBody CustomerDto customerDto){
+        iAccountService.createAccount(customerDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto(AccountsConstants.STATUS_201,AccountsConstants.MESSAGE_201));
     }
-    @GetMapping("/connect")
-    public String saveCustomer(){
-        return "Hello Work!";
-    }
+    @GetMapping("/fetch")
+    public ResponseEntity<CustomerDto> fetchAccountDetails(@RequestParam String mobileNumber) {
 
-    @GetMapping("/customers")
-    public ResponseEntity<List<Customer>> getAllCustomers(){
-        List<Customer> customerList = customerRepository.findAll();
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(customerList);
-
+        CustomerDto customerDto = iAccountService.fetchAccount(mobileNumber);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(customerDto);
     }
 }
+
