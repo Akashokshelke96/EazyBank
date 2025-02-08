@@ -1,4 +1,4 @@
-package com.eazybytes.accounts.dto;
+package com.eazybytes.loans.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -7,12 +7,13 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
+@Data @AllArgsConstructor
 @Schema(
-        name ="ErrorResponseDto",
+        name = "ErrorResponse",
         description = "Schema to hold error response information"
 )
-@Data @AllArgsConstructor
 public class ErrorResponseDto {
+
     @Schema(
             description = "API path invoked by client"
     )
@@ -32,6 +33,5 @@ public class ErrorResponseDto {
             description = "Time representing when the error happened"
     )
     private LocalDateTime errorTime;
-
 
 }
